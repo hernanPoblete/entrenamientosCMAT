@@ -33,7 +33,8 @@ userSchema.pre('save', async function(next){
     next();
 });
 
-userSchema.methods.validate = async function(password: string){
+userSchema.methods.validateUser = async function(password: string){
+    console.log(this.password, password);
     return (await bcrypt.compare(password, this.password));
 }
 
