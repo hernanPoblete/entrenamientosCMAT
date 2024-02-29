@@ -19,10 +19,10 @@ const login_config:object={
 
 passport.use('login', new localStrategy(login_config, async(rut, password, done)=>{
     try {
+        if(!rut||!password) return done(null, false, {message: "Falta usuario o contraseña"})
         let user = await User.findOne({rut: rut});
-        console.log(user)
         if(!user){return done(null, false, {message: "Usuario no encontrado."})} 
-        if(!user.validateUser(password)){return done(null, false, {message: "Contraseña incorrecta para el usuario seleccionado."})} 
+        if(!(await user.validateUser(password))){return done(null, false, {message: "Contraseña incorrecta para el usuario seleccionado."})} 
         return done(null, user, {message: "Login exitoso"});
     
     } catch (error) {
@@ -38,6 +38,6 @@ passport.use('jwt', new jwtStrategy({
     try {
         return done(null, token.user)
     } catch (error) {
-        done(error)
+        return done(error)
     }
 }))

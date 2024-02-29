@@ -15,34 +15,21 @@ const app = express()
 const port: number = parseInt(process.env.PORT||'3030');
 app.use(urlencoded({extended:true}));
 app.use(json());
+app.set("view-engine", "ejs");
+app.set("views", "./views");
 
 mongoose.connect(process.env.MONGO_CONNECTION||"mongodb://127.0.0.1:27017/entrenamientoCMAT");
 
 app.get('/', (req, res) => {
-    res.send(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
-    <body>
-        <form action="login" method="post">
-            <input type="text" name="rut" id=""><br><input type="password" name="password" id=""><br><input type="submit" value="">
-        </form>
-    </body>
-    </html>
-    `)
+    res.render("login.ejs")
 })
 
 app.post('/login', async (req, res,next)=>{
     passport.authenticate("login", async (err:any, user:any, info:any)=>{
         try {
+
             if(err||!user){
-                const e = new Error("New Error");
-                console.error(err);
-                return next(e);
+                throw new Error(info? info!.message:"Ha ocurrido un error inesperado")
             }
 
             req.login(user, {session:false}, async (err)=>{
@@ -61,10 +48,14 @@ app.post('/login', async (req, res,next)=>{
 
 
         } catch (error) {
-            next(error)
+            res.render("login.ejs", {
+                message: error
+            })
         }
     })(req, res, next);
 });
+
+
 
 app.get("/perfil", passport.authenticate("jwt", {session:false}), async (req, res, next)=>{
     interface U extends Express.User {
