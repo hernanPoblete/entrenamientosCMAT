@@ -1,3 +1,4 @@
+
 import express, { Router, json, urlencoded } from 'express'
 import * as path from 'path';
 import * as mongoose from 'mongoose';
@@ -6,6 +7,7 @@ import { sign } from "jsonwebtoken";
 import './auth'
 
 import * as dotenv from 'dotenv';
+
 dotenv.config({
     'path': path.join(process.cwd(), '.env')
 });
@@ -13,6 +15,7 @@ dotenv.config({
 
 const app = express()
 const port: number = parseInt(process.env.PORT||'3030');
+
 app.use(urlencoded({extended:true}));
 app.use(json());
 app.set("view-engine", "ejs");
