@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("./partials/headinfo")%>
+</head>
+<body>
+    <form action="login" method="post">
+        <input type="text" name="rut" id=""><br><input type="password" name="password" id=""><br><input type="submit" value="">
+    </form>
+    <br>
+    <% if (message) { %>
+        <div><%- message %><div>
+    <% } %>
+</body>
+</html>
