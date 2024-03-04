@@ -1,0 +1,26 @@
+*{
+    padding:0;
+    margin:0;
+    list-style: none;
+}
+
+header{
+    background: rgb(12, 7, 138);
+    height: 100px;
+    width: 100%;
+    position:sticky;
+}
+
+header a{
+    color:white;
+}
+
+header>ul{
+    display:flex;
+    flex-direction: row;
+    position: relative;
+    left: 50%;
+    top:50%;
+    width:fit-content;
+    transform: translate(-50%, -50%);
+}

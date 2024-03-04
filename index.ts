@@ -1,4 +1,3 @@
-
 import express, { Router, json, urlencoded } from 'express'
 import * as path from 'path';
 import * as mongoose from 'mongoose';
@@ -18,6 +17,8 @@ const port: number = parseInt(process.env.PORT||'3030');
 
 app.use(urlencoded({extended:true}));
 app.use(json());
+app.use(express.static('public'));
+
 app.set("view-engine", "ejs");
 app.set("views", "./views");
 
@@ -41,7 +42,8 @@ app.post('/login', async (req, res,next)=>{
                     __id:user.__id,
                     nombre: user.nombre,
                     rut:user.rut,
-                    acceso:user.acceso
+                    acceso:user.acceso,
+                    cursos: user.cursos
                 }
 
                 const token = sign({user:body}, process.env.SECRET_KEY||"trespuntounocuatrounocinconuevedosseiscinco")
@@ -67,11 +69,7 @@ app.get("/perfil", passport.authenticate("jwt", {session:false}), async (req, re
         acceso?:number
     }
 
-    let accesos: string[]= ["Admin", "Profesor", "Estudiante"];
-
-    let u: U | undefined= req.user
-    let a = u === undefined?2:(u.acceso === undefined ? 2:u.acceso)
-    res.send(`<h1>Bienvenid@ ${u?.nombre}. Tu nivel de acceso es ${accesos[a]}</h1>`)
+    res.render('dashboard.ejs', {userinfo: req.user})
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
