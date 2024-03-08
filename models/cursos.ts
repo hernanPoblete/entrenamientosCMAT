@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from "mongoose";
+import mongoose, { Schema, model, Types } from "mongoose";
 import * as bcrypt from 'bcrypt';
 let user = require("./users");
 
@@ -18,8 +18,8 @@ const Curso = new Schema({
 //En caso de que alguien tenga un codigo de curso que está recién siendo añadido
 Curso.pre("save", async function(next){
     let u = await user.find({cursos:{$in: [this.codigo] }});
-    u=u.map((u:{id:String})=>{
-        return u.id
+    u=u.map((u:{id:string})=>{
+        return new mongoose.Types.ObjectId(u.id)
     });
     this.integrantes = u;
 

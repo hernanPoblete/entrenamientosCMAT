@@ -41,3 +41,24 @@ passport.use('jwt', new jwtStrategy({
         return done(error)
     }
 }))
+
+
+passport.use('cursos', new jwtStrategy({
+    secretOrKey: process.env.SECRET_KEY||"trespuntounocuatrounocinconuevedosseiscinco",
+    jwtFromRequest: ExtractJwt.fromUrlQueryParameter('secret_token'),
+    passReqToCallback:true,
+}, async function(req, token, done){
+    try {
+        let {codigo} = req.params;
+        let codigosUsuario: String[] = token.user.cursos.map((e:{codigo:String})=>e.codigo)
+        console.log(token.user.acceso === 0)
+        if(!(codigosUsuario.includes(codigo) || token.user.acceso=== 0)){
+            return done(null, false, {message: "Usuario no cuenta con acceso al curso"})
+        }
+
+
+        return done(null, token.user)
+    } catch (error) {
+        return done(error);
+    }
+}))

@@ -7,6 +7,13 @@
     <%- include('./partials/header.ejs') %>
     <br>
     <%- JSON.stringify(userinfo) %>
-    <h1>Bienvenid@ </h1>
+    <h1>Bienvenid@ <%- userinfo.nombre %>. Eres <%- userinfo.acceso %>. Revisa aquí tus cursos </h1>
+    <h2>Cursos</h2>
+    <br>
+    <ol>
+        <% userinfo.cursos.forEach(element => { %>
+         <li><a href="cursos/<%-element.codigo%>?secret_token=<%-token%>"> <%-element.nombre%> </a></li>
+        <% }) %>
+    </ol>
 </body>
 </html>
