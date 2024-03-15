@@ -7,7 +7,7 @@ let router = Router();
 
 router.get("/", passport.authenticate("cursos", {session:false}), async (req, res, next)=>{
 
-    res.render("interfaz_curso.ejs", {userinfo: req.user, token: req.query.secret_token, data: await cursos.findOne(req.params)})
+    res.render("interfaz_curso.ejs", {userinfo: req.user, data: await cursos.findOne(req.params)})
 })
 
 

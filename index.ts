@@ -19,6 +19,7 @@ const port: number = parseInt(process.env.PORT||'3030');
 app.use(urlencoded({extended:true}));
 app.use(json());
 app.use(express.static('public'));
+app.use(require("cookie-parser")());
 
 app.set("view-engine", "ejs");
 app.set("views", "./views");

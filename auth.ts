@@ -33,7 +33,7 @@ passport.use('login', new localStrategy(login_config, async(rut, password, done)
 
 passport.use('jwt', new jwtStrategy({
     secretOrKey: process.env.SECRET_KEY||"trespuntounocuatrounocinconuevedosseiscinco",
-    jwtFromRequest: ExtractJwt.fromUrlQueryParameter('secret_token')
+    jwtFromRequest: req=>req.cookies.session
 }, async (token, done)=>{
     try {
         return done(null, token.user)
@@ -45,7 +45,7 @@ passport.use('jwt', new jwtStrategy({
 
 passport.use('cursos', new jwtStrategy({
     secretOrKey: process.env.SECRET_KEY||"trespuntounocuatrounocinconuevedosseiscinco",
-    jwtFromRequest: ExtractJwt.fromUrlQueryParameter('secret_token'),
+    jwtFromRequest: req=>req.cookies.session,
     passReqToCallback:true,
 }, async function(req, token, done){
     try {
