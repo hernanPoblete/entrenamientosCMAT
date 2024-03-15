@@ -51,7 +51,6 @@ passport.use('cursos', new jwtStrategy({
     try {
         let {codigo} = req.params;
         let codigosUsuario: String[] = token.user.cursos.map((e:{codigo:String})=>e.codigo)
-        console.log(token.user.acceso === 0)
         if(!(codigosUsuario.includes(codigo) || token.user.acceso=== 0)){
             return done(null, false, {message: "Usuario no cuenta con acceso al curso"})
         }
