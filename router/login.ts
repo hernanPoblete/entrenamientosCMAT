@@ -19,7 +19,8 @@ router.post('/', async (req, res,next)=>{
                 const {password,__v, ...body} = user["_doc"];
                 body.cursos = body.acceso === 0? await cursos.find({}, "nombre codigo"): await user.encontrarCursos();
             
-                const token = sign({user: body}, process.env.SECRET_KEY||"trespuntounocuatrounocinconuevedosseiscinco")
+                const token = sign({user: body}, process.env.SECRET_KEY||"trespuntounocuatrounocinconuevedosseiscinco");
+                res.cookie("session", token);
                 return res.redirect(`perfil?secret_token=${token}`);
             
             });
