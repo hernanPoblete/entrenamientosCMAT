@@ -24,3 +24,19 @@ header>ul{
     width:fit-content;
     transform: translate(-50%, -50%);
 }
+
+
+
+
+
+
+
+.messageContainer{
+
+    width:fit-content;
+    transform: translate(10%);
+}
+
+.messageContent{
+        border: 1px black solid;
+}

@@ -2,7 +2,7 @@ import {Router} from 'express';
 import passport from 'passport';
 import { sign } from "jsonwebtoken";
 let cursos = require("../models/cursos");
-
+import "../auth"
 
 let router = Router();
 
@@ -18,7 +18,8 @@ router.post('/', async (req, res,next)=>{
                 const {password,__v, ...body} = user["_doc"];
                 body.cursos = body.acceso === 0? await cursos.find({}, "nombre codigo"): await user.encontrarCursos();
             
-                const token = sign({user: body}, process.env.SECRET_KEY||"trespuntounocuatrounocinconuevedosseiscinco")
+                const token = sign({user: body}, process.env.SECRET_KEY||"trespuntounocuatrounocinconuevedosseiscinco");
+                res.cookie("session", token);
                 return res.redirect(`perfil`);
             
             });
@@ -35,8 +36,12 @@ router.post('/', async (req, res,next)=>{
 
 
 router.get("/out", async (req, res)=>{
-    res.clearCookie("session");
-    res.redirect("/");
+
+    req.logOut({}, async err=>{
+        res.clearCookie("session");
+        res.redirect("/");   
+    })
+    
 })
 
 module.exports = router
