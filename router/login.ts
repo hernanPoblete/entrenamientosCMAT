@@ -6,7 +6,7 @@ import "../auth"
 
 let router = Router();
 
-router.post('/', async (req, res,next)=>{
+router.post('/login', async (req, res,next)=>{
     passport.authenticate("login", async (err:any, user:any, info:any)=>{
         try {
             if(err||!user){
@@ -20,7 +20,7 @@ router.post('/', async (req, res,next)=>{
             
                 const token = sign({user: body}, process.env.SECRET_KEY||"trespuntounocuatrounocinconuevedosseiscinco");
                 res.cookie("session", token);
-                return res.redirect(`perfil`);
+                return res.redirect(`/perfil`);
             
             });
 
@@ -35,13 +35,10 @@ router.post('/', async (req, res,next)=>{
 
 
 
-router.get("/out", async (req, res)=>{
-
-    req.logOut({}, async err=>{
-        res.clearCookie("session");
-        res.redirect("/");   
-    })
-    
+router.post("/out", async (req, res)=>{
+    req.user = undefined
+    res.clearCookie("session");
+    res.redirect("/");   
 })
 
 module.exports = router

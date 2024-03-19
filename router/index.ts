@@ -3,7 +3,8 @@ import {Router} from 'express';
 let router = Router();
 
 router.get("/", (req, res)=>{
-    res.render("login.ejs");
+    console.log(req.cookies);
+    req.cookies.session?res.redirect("perfil"):res.render("login.ejs");
 })
 
 module.exports = router

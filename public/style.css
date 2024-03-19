@@ -33,7 +33,7 @@ header>ul{
 
 .messageContainer{
 
-    width:fit-content;
+    width: 500px;
     transform: translate(10%);
 }
 
