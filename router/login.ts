@@ -20,7 +20,9 @@ router.post('/login', async (req, res,next)=>{
             
                 const token = sign({user: body}, process.env.SECRET_KEY||"trespuntounocuatrounocinconuevedosseiscinco");
                 res.cookie("session", token);
+
                 return res.redirect(`/perfil`);
+
             
             });
 
