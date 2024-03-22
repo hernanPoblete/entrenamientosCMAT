@@ -12,7 +12,7 @@
     <br>
     <ol>
         <% userinfo.cursos.forEach(element => { %>
-         <li><a href="cursos/<%-element.codigo%>?secret_token=<%-token%>"> <%-element.nombre%> </a></li>
+         <li><a href="cursos/<%-element.codigo%>"> <%-element.nombre%> </a></li>
         <% }) %>
     </ol>
 </body>

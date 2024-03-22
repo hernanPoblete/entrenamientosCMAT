@@ -19,6 +19,7 @@ const port: number = parseInt(process.env.PORT||'3030');
 app.use(urlencoded({extended:true}));
 app.use(json());
 app.use(express.static('public'));
+app.use(require("cookie-parser")());
 
 app.set("view-engine", "ejs");
 app.set("views", "./views");
@@ -27,7 +28,7 @@ app.set("views", "./views");
 mongoose.connect(process.env.MONGO_CONNECTION||"mongodb://127.0.0.1:27017/entrenamientoCMAT");
 
 app.use("/", require("./router/index"));
-app.use("/login", require("./router/login"));
+app.use("/auth", require("./router/login"));
 app.use("/perfil", require("./router/perfil"))
 app.use("/cursos/:codigo", require("./router/cursos"));
 
