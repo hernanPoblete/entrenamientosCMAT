@@ -2,7 +2,7 @@ import mongoose, { Schema, model, Types } from "mongoose";
 import * as bcrypt from 'bcrypt';
 let user = require("./users");
 
-let con = mongoose.connect("mongodb://127.0.0.1:27017/entrenamientoCMAT");
+//let con = mongoose.connect("mongodb://127.0.0.1:27017/entrenamientoCMAT");
 
 const Curso = new Schema({
     codigo: {

@@ -28,7 +28,7 @@ app.set("views", "./views");
 mongoose.connect(process.env.MONGO_CONNECTION||"mongodb://127.0.0.1:27017/entrenamientoCMAT");
 
 app.use("/", require("./router/index"));
-app.use("/login", require("./router/login"));
+app.use("/auth", require("./router/login"));
 app.use("/perfil", require("./router/perfil"))
 app.use("/cursos/:codigo", require("./router/cursos"));
 
