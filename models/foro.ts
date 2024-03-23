@@ -21,7 +21,8 @@ let Mensaje = new Schema({
     contenido:{
         type:String,
         required: true
-    }
+    },
+    titulo: String
 })
 
 

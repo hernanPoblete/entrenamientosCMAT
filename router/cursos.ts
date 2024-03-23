@@ -5,18 +5,26 @@ let cursos = require("../models/cursos");
 let foro = require("../models/foro")
 import { Types } from 'mongoose';
 
+interface EnsuredData{
+    codigo?:string
+}
 
-
-let router = Router();
+let router = Router({mergeParams: true});
 
 router.get("*", passport.authenticate("cursos", {session:false}), async (req, res, next)=>{
-
     next()
 })
 
 router.get("/", async (req, res, next)=>{
     res.render("interfaz_curso.ejs", {userinfo: req.user, data: await cursos.findOne(req.params)})
 })
+
+
+router.get("/foro", async (req, res, next)=>{
+    let p: EnsuredData = req.params;
+    let f = await foro.find({curso:p.codigo, esAncestroMayor: true}, "titulo id")
+    res.render("foromaster.ejs", {posts: f});
+});
 
 router.get("/foro/:id", async (req, res, next)=>{
     let {id} = req.params;
@@ -49,7 +57,8 @@ router.get("/foro/:id", async (req, res, next)=>{
         f = f.concat("</div>")
         return f
     }
-    res.render("foro.ejs", {user: req.user, data: d[0], build: build})
+    res.json(d[0])
+    //res.render("foro.ejs", {user: req.user, data: d[0], build: build})
 })
 
 module.exports = router
