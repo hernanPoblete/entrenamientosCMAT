@@ -12,7 +12,7 @@ let Mensaje = new Schema({
         type:String,
         required:true
     },
-    hijos: Types.ObjectId,
+    hijos: Array,
     esAncestroMayor:{
         type:Boolean,
         default:false,
@@ -21,7 +21,8 @@ let Mensaje = new Schema({
     contenido:{
         type:String,
         required: true
-    }
+    },
+    titulo: String
 })
 
 

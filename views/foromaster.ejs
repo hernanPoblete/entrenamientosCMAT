@@ -6,9 +6,10 @@
 <body>
     <%- include('./partials/header.ejs') %>
     <br>
-    <h1>Inserte aquí interfaz para <%-data.nombre%></h1>
-    <%-JSON.stringify(data)%>
-    <br><br><br>
-    <a href="<%-data.codigo%>/foro">Ir al foro aqui</a>
+    <h1>Foro</h1>
+    <%- JSON.stringify(posts)%>
+    <% posts.forEach(p => { %>
+        <a href="foro/<%-p._id%>"><%-p.titulo%></a>
+    <% }) %>
 </body>
 </html>
