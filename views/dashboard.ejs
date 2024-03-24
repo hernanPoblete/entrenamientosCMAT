@@ -6,8 +6,7 @@
 <body>
     <%- include('./partials/header.ejs') %>
     <br>
-    <%- JSON.stringify(userinfo) %>
-    <h1>Bienvenid@ <%- userinfo.nombre %>. Eres <%- userinfo.acceso %>. Revisa aquí tus cursos </h1>
+    <h1>Bienvenid@ <%- userinfo.nombre %>. Eres <%- ["Admin", "Profesor", "Estudiante"][userinfo.acceso] %>. Revisa aquí tus cursos </h1>
     <h2>Cursos</h2>
     <br>
     <ol>
